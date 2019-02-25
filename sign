@@ -1,0 +1,16 @@
+#!/bin/sh
+
+[ -z "$SIGN_CERT" ] && echo "SIGN_CERT is not set, exiting" && exit 1
+[ -z "$SIGN_CERT_KEY" ] && echo "SIGN_CERT_KEY is not set, exiting" && exit 1
+
+if [ "$1" == "solution" ]; then
+  solution=$(basename $(ls *.sln) .sln)
+  target=$solution/bin/Release/$solution.dll
+else
+  target=$1
+fi
+
+echo $SIGN_CERT | base64 --decode > cert.pfx
+osslsigncode sign -pkcs12 cert.pfx -pass $SIGN_CERT_KEY -t http://tsa.starfieldtech.com -in $target -out $target.signed
+mv $target.signed $target
+rm cert.pfx
