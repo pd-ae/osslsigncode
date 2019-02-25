@@ -3,7 +3,7 @@
 [ -z "$SIGN_CERT" ] && echo "SIGN_CERT is not set, exiting" && exit 1
 [ -z "$SIGN_CERT_KEY" ] && echo "SIGN_CERT_KEY is not set, exiting" && exit 1
 
-if [ "$1" == "solution" ]; then
+if [ "$1" = "solution" ]; then
   solution=$(basename $(ls *.sln) .sln)
   target=$solution/bin/Release/$solution.dll
 else
