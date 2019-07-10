@@ -12,5 +12,7 @@ fi
 
 echo $SIGN_CERT | base64 --decode > cert.pfx
 osslsigncode sign -pkcs12 cert.pfx -pass $SIGN_CERT_KEY -t http://tsa.starfieldtech.com -in $target -out $target.signed
-mv $target.signed $target
+rm -rf $solution/bin/Signed
+mkdir $solution/bin/Signed
+mv $target.signed $solution/bin/Signed/$solution.dll
 rm cert.pfx
