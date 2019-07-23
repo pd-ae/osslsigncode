@@ -8,6 +8,7 @@ if [ "$1" = "solution" ]; then
   target=$solution/bin/Release/$solution.dll
 else
   target=$1
+  solution=$(basename $target .dll)
 fi
 
 echo $SIGN_CERT | base64 --decode > cert.pfx
