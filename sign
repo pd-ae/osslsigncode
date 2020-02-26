@@ -8,10 +8,10 @@ if [ "$1" = "solution" ]; then
   target=$solution/bin/Release/$solution.dll
 else
   target=$1
-  if [ -z "$2" ] then
-    extension = ".dll"
+  if [ -z "$2" ]; then
+    extension=".dll"
   else
-    extension = $2
+    extension=$2
   fi
   solution=$(basename $target $extension)
 fi
