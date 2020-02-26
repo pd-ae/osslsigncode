@@ -8,12 +8,17 @@ if [ "$1" = "solution" ]; then
   target=$solution/bin/Release/$solution.dll
 else
   target=$1
-  solution=$(basename $target .dll)
+  if [ -z "$2" ] then
+    extension = ".dll"
+  else
+    extension = $2
+  fi
+  solution=$(basename $target $extension)
 fi
 
 echo $SIGN_CERT | base64 --decode > cert.pfx
 osslsigncode sign -pkcs12 cert.pfx -pass $SIGN_CERT_KEY -t http://tsa.starfieldtech.com -in $target -out $target.signed
 rm -rf $solution/bin/Signed
 mkdir $solution/bin/Signed
-mv $target.signed $solution/bin/Signed/$solution.dll
+mv $target.signed $solution/bin/Signed/${solution}${extension}
 rm cert.pfx
